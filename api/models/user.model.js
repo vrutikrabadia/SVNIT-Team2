@@ -11,10 +11,14 @@ const Schema = mongoose.Schema;
  */
 const userModel = new Schema(
   {
-    userId: {
+    username: {
       type: String,
       required: true,
       unique: true,
+    },
+    password: {
+      type: String,
+      required: true
     },
     watchlist: [
       {

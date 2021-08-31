@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const cors = require("cors");
-const fs = require('fs');
-
+const fs = require("fs");
 
 const routes = require("./routes");
 
@@ -19,20 +19,32 @@ const app = express();
  * Add the middlewares to express server
  */
 
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/", routes); //  Connect all our routes to our application
 
+var dir = "./uploads";
 
-var dir = './uploads';
-
-if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
 }
+
+/**
+ * Database setup
+ */
+const users_ATLAS_URI = require("./config/db.js").users_mongo_uri;
+const uri = users_ATLAS_URI;
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("Mongoose database connection established successfully");
+  // console.log(uri);				// This line exposes the ATLAS URI to terminal, to be used only during debugging
+});
 
 /**
  * Start the server

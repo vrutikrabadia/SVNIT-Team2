@@ -63,12 +63,12 @@ exports.getDateRangeData = async function (req, res) {
       if (price.low < lowest) lowest = price.low;
     }
   }
-  if (stocks.length > 0)
+  if (data.length > 0)
     res.status(200).json({
       status: "success",
       message: data,
       highest: highest,
       lowest: lowest,
     });
-  else res.status(404).json({ status: "error", message: "No stocks found" });
+  else res.status(404).json({ status: "error", message: "No stocks found with given criteria." });
 };

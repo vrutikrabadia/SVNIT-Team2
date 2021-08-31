@@ -54,6 +54,7 @@ const stockSchema = new Schema(
   },
   {
     timestamps: true,
+    collection: "stocks",
   }
 );
 

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const login = require("./login");
+const new_user = require("./new_user");
 
 /**
  * @route GET /public/login
@@ -9,6 +9,7 @@ const login = require("./login");
  * @returns {Object}
  */
 router.use("/login", login);
+router.use("/new_user", new_user);
 
 
 module.exports = router;

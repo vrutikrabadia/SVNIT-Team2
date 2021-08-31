@@ -8,18 +8,28 @@ function authenticate(req,res, callback){
         .auth()
         .verifyIdToken(token)
         .then((user) => {
-            let u = new User(user.uid);
 
-            // u.getRole((err,role)=>{
-            //     if(err){
-            //         return res.sendStatus(500);
-            //     }
+            User.findOne({userId: user.uid}, (err, found)=>{
+                if(err){
+                    return res.sendStatus(500);
+                }
+                if(found){
+                    req.user = { id: found._id, uid: found.userId};
+                }
+                else{
+                    let user = new userModel({userId: req.body.userId});
 
-            //     req.user = user;
-            //     req.user.role = role[0].role;
-            //     // res.write(req.user);
-            //     callback();
-            // })
+                    user.save((err, id)=>{
+                        if(err){
+                            return res.sendStatus(500);
+                        }
+                        else{
+                            req.user = { id: found._id, uid: found.userId};
+                        }
+                    })
+                    
+                }
+            })
 
             
         })

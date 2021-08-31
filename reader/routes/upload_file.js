@@ -1,20 +1,30 @@
-const { uploadDisk } = require("../../middleware");
-const authenticate = require("../../middleware/auth");
 const fs = require('fs');
+const uploadDisk = require("../middleware/multer");
+const stockSchema = require("./../models/stocks.model");
 
 
 const router = require("express").Router();
 
-// router.use(authenticate);
 
-router.post("/", uploadDisk.single("file") , (req,res)=>{
-    console.log(__dirname+"/../../uploads");
-    let rawdata = fs.readFileSync(__dirname+"/../../uploads/data.json");
+
+router.post("/", uploadDisk.single("file") , async(req,res)=>{
+    let rawdata = fs.readFileSync(__dirname+"/../uploads/data.json");
     let data = JSON.parse(rawdata);
 
     // console.log(data.slice(0,10));
 
-    data = clean_data(data);
+    data = await clean_data(data);
+
+    console.log(data[0].prices[0]);
+
+    stockSchema.insertMany(data)
+        .then(function(mongooseDocuments) {
+            res.sendStatus(200);
+        })
+        .catch(function(err) {
+            res.sendStatus(500);
+            console.log(err);
+        });
 
     // res.send(data);
 
@@ -27,7 +37,7 @@ router.post("/", uploadDisk.single("file") , (req,res)=>{
             let prices = {};
             prices['high'] = data[i].high;
             prices['low'] = data[i].low;
-            prices['open_price'] = data[i].open;
+            prices['open'] = data[i].open;
             prices['close'] = data[i].close;
             prices['date'] = data[i].date;
             prices['volume'] = data[i].volume;

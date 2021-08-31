@@ -3,17 +3,13 @@
         "include": [
             "./app.js",
             "./config/db.js",
-            "./config/firebase.js",
             "./controllers/addStockData.js",
             "./controllers/getStockData.js",
             "./middleware/auth.js",
             "./middleware/multer.js",
             "./middleware/index.js",
             "./models/stock.model.js",
-            "./models/user.model.js",
-            "./routes/index.js",
-            "./routes/protected/index.js",
-            "./routes/protected/upload_file.js"
+            "./models/user.model.js"
         ],
         "includePattern": ".js$",
         "excludePattern": "(node_modules/|docs)"

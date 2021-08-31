@@ -10,6 +10,8 @@ Members - in alphabetical order
 - [Rakesh Kumar](https://github.com/rakesh493)
 - [Vrutik Rabadia](https://github.com/vrutikrabadia)
 
+### [Web-documentation of the APIs](https://avanishcodes.github.io/SVNIT-Team2/global.html)
+
 ### All commands from the root server
 
 - How to start the backend server

@@ -5,6 +5,7 @@ const { route } = require("./public");
 const {
   getStockData,
   getSimilarStockNames,
+  getDateRangeData,
 } = require("../controllers/getStockData");
 const { addStockData } = require("../controllers/addStockData");
 // const protected = require("./protected");
@@ -36,6 +37,8 @@ router.get("/", (req, res) => {
 });
 
 router.get("/add_new_stock_data/:stock", addStockData);
+
+router.get("/get_date_range_data/:stock", getDateRangeData);
 
 router.get("/get_stocks/:stock_pattern", getSimilarStockNames);
 module.exports = router;

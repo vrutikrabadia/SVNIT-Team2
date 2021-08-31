@@ -37,6 +37,7 @@ var dir = "./uploads";
  */
 const users_ATLAS_URI = require("./config/db.js").users_mongo_uri;
 const uri = users_ATLAS_URI;
+console.log(uri);
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

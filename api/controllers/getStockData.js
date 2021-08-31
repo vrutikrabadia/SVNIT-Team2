@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Stock = require("../models/stock.model");
 
 /**
- * @api {get} /stock/:symbol Get stock data
+ * @api {get} /{stock} Get stock data
  * @param {req} req - request object containing stock symbol in path
  * @param {res} res - response object containing stock data
  */
@@ -24,12 +24,13 @@ exports.getStockData = async function (req, res) {
       return res.status(200).json({ status: "success", stocks: stocks });
     }
   });
-  // console.log(stocks);
-  // return res.status(200).json({
-  //   status: "success",
-  // });
 };
 
+/**
+ * @api {get} /get_stocks/{stock_pattern} Get stock names with company name for a given pattern
+ * @param {obj} req Request object containing pattern of stock symbol to be searched in path
+ * @param {obj} res List of matching stock symbols
+ */
 exports.getSimilarStockNames = async function (req, res) {
   let stocks = await Stock.find({
     symbol: { $regex: req.params.stock_pattern },
@@ -39,6 +40,11 @@ exports.getSimilarStockNames = async function (req, res) {
   else res.status(404).json({ status: "error", message: "No stocks found" });
 };
 
+/**
+ * @api {get} /stock/:symbol/:date Get stock data for a given date
+ * @param {object} req Request object containing stock symbol in path
+ * @param {object} res Response object containing stock data within a given range of dates
+ */
 exports.getDateRangeData = async function (req, res) {
   let stocks = await Stock.find({
     symbol: req.params.stock,

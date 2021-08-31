@@ -1,22 +1,21 @@
-const { uploadDisk } = require("../../middleware");
-const authenticate = require("../../middleware/auth");
 const fs = require('fs');
+const uploadDisk = require("../middleware/multer");
 
 
 const router = require("express").Router();
 
-// router.use(authenticate);
 
-router.post("/", uploadDisk.single("file") , (req,res)=>{
+
+router.post("/", uploadDisk.single("file") , async(req,res)=>{
     console.log(__dirname+"/../../uploads");
-    let rawdata = fs.readFileSync(__dirname+"/../../uploads/data.json");
+    let rawdata = fs.readFileSync(__dirname+"/../uploads/data.json");
     let data = JSON.parse(rawdata);
 
     // console.log(data.slice(0,10));
 
-    data = clean_data(data);
+    data = await clean_data(data);
 
-    // res.send(data);
+    console.log(data.length);    // res.send(data);
 
     fs.writeFileSync('./data.json', JSON.stringify(data) , 'utf-8'); 
 

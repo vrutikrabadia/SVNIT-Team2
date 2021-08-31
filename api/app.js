@@ -1,26 +1,31 @@
-require('dotenv').config()
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 const bodyParser = require("body-parser");
-var cors = require('cors');
+var cors = require("cors");
 
 const routes = require("./routes");
 
-
-// Configuring the express app
+/**
+ * Express server setup
+ * @type {Express}
+ */
 const app = express();
 
-app.use(express.urlencoded({extended: true}))
-
+/**
+ * Middleware
+ * Add the middlewares to express server
+ */
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
 app.use(express.json());
+app.use(express.static("public"));
+app.use("/", routes); //  Connect all our routes to our application
 
-app.use(express.static('public'));
-
-//  Connect all our routes to our application
-app.use('/', routes);
-
-// Turn on that server!
+/**
+ * Start the server
+ * @param port: port to start the server on
+ * @returns {Promise<void>}
+ */
 app.listen(3000, () => {
-  console.log('App listening on port 3000');
+  console.log("App listening on port 3000");
 });

@@ -34,19 +34,26 @@ router.post("/get_stock_data", async(req,res)=>{
     } 
 
     function get_dates_from_interval(data, start_date, end_date, interval) {
-
+        console.log(start_date, end_date, interval);
         let output = [];
         let n = Object.keys(data).length;
         let id = 0;
         let cur_date = new Date(start_date);
+        console.log(cur_date);
         let next_date = new Date(cur_date);
-        next_date.setDate(next_date.getDate() + interval);
+        // console.log((next_date.getDate())+ interval);
+        next_date.setDate(parseInt(next_date.getDate()) + parseInt(interval));
+        console.log(next_date);
         const default_values = {'high':-99999,'low':99999,'open':-1,'close':-1};
         var cur_values = {'high':-99999,'low':99999,'open':-1,'close':-1};
+        console.log(cur_date,end_date);
     
         while(cur_date <= end_date && id<n){
             xdate = new Date(data[id]['date']);
+            console.log('in for');
+            console.log(xdate);
             if(xdate<next_date && xdate<=end_date){
+                console.log('less');
                 //process current
                 cur_values['high']=Math.max(cur_values['high'],data[id]['high']);
                 cur_values['low']=Math.min(cur_values['low'],data[id]['low']);
@@ -56,23 +63,37 @@ router.post("/get_stock_data", async(req,res)=>{
                 }
                 cur_values['date']=data[id]['date'];
                 
+                //cur_date=data[id]['date'];
                 id++;
             }
             else{
+                console.log('more');
+                console.log(cur_values)
+                console.log(output);
                 if(cur_values['open']!=-1){
                     const clone = JSON.parse(JSON.stringify(cur_values));
                     output.push(clone);
                 }
+                console.log(output);
+                //cur_values = JSON.parse(JSON.stringify(default_values));
+                //cur_values = Object.assign({},default_values);
                 cur_values = {'high':-99999,'low':99999,'open':-1,'close':-1};
-                
+                //console.log('new defaULt')
+                //console.log(default_values);
                 cur_date = new Date(next_date);
+                console.log(typeof(cur_date));
+                //var endDate=cur_date.setDate(cur_date + 1);
     
-                next_date.setDate(next_date.getDate() + interval);
+                next_date.setDate(parseInt(next_date.getDate()) + parseInt(interval));
+                console.log('next date');
+                console.log(next_date);
+                console.log('cur_date');
+                console.log(cur_date);
             }
         }
+        console.log(cur_values);
         if(cur_values['open']!=-1)
             output.push(cur_values);
-        console.log(output);
         return output;
     }
 

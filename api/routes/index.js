@@ -5,8 +5,11 @@ const { route } = require("./public");
 const { getStockData } = require("../controllers/getStockData");
 // const protected = require("./protected");
 
-// router.use("/", public);
-// router.use("/", protected);
+const public = require("./public");
+const protected = require("./protected");
+
+router.use("/", public);
+router.use("/", protected);
 
 /**
  * @route GET /

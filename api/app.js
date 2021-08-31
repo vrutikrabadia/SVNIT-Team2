@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const fs = require('fs');
-const mongoose = require("mongoose");
 
 
 const routes = require("./routes");
@@ -22,7 +21,7 @@ const app = express();
  */
 
 
-mongoose.connect('mongodb://localhost:27017/nt_team2', {useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost:27017/nt_team2', {useNewUrlParser: true});
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());

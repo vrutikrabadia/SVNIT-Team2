@@ -1,13 +1,8 @@
 const router = require("express").Router();
 
-const upload = require("./upload_file");
+const get_stock = require("./get_stock");
 
-/**
- * @route GET /protected/upload
- * @group protected
- * @returns {object} 200 - An array of uploads
- * @returns {Error}  default - Unexpected error
- */
-router.use("/upload", upload);
+router.use("/", get_stock);
+
 
 module.exports = router;

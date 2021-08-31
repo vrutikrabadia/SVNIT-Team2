@@ -16,9 +16,6 @@
     "opts": {
         "recurse": true,
         "encoding": "utf8",
-        "destination": "../docs/",
-        "template": "./custom-template",
-        "tutorials": "./tutorials",
-        "readme": "./readme.md"
+        "destination": "./../docs/"
     }
 }

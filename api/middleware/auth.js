@@ -1,41 +1,24 @@
 const admin = require("./../config/firebase");
 const User = require("./../models/user.model"); 
+const jwt = require('jsonwebtoken');
 
-function authenticate(req,res, callback){
-    // console.log(req.headers);
-    var token = req.headers.authorization.split(" ")[1];
-    admin
-        .auth()
-        .verifyIdToken(token)
-        .then((user) => {
+const authenticateJWT = (req, res, next) => {
+    const authHeader = req.headers.authorization;
 
-            User.findOne({userId: user.uid}, (err, found)=>{
-                if(err){
-                    return res.sendStatus(500);
-                }
-                if(found){
-                    req.user = { id: found._id, uid: found.userId};
-                }
-                else{
-                    let user = new userModel({userId: req.body.userId});
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
+        jwt.verify(token, process.env.SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
 
-                    user.save((err, id)=>{
-                        if(err){
-                            return res.sendStatus(500);
-                        }
-                        else{
-                            req.user = { id: found._id, uid: found.userId};
-                        }
-                    })
-                    
-                }
-            })
-
-            
-        })
-        .catch((error) => {
-            return res.sendStatus(401);
+            req.user = user;
+            next();
         });
-}
+    } 
+    else {
+        res.sendStatus(401);
+    }
+};
 
-module.exports = authenticate;
+module.exports = authenticateJWT;

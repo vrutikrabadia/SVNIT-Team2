@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ## **SVNIT Team 2**
 
 ### Submission for NorthernTrust intern hiring hackathon
@@ -65,6 +65,6 @@ Members - in alphabetical order
 - [GitHub](https://www.github.com/AvanishCodes/SVNIT-Team2)
 - [JavaScript](https://www.javascript.com/)
 - [Node.js](https://nodejs.org/)
-=======
-# SVNIT-Team2
->>>>>>> 1a0d3be77caafb079d955aab14126d175fb8156c
+
+
+

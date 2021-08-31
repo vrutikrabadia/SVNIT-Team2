@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 var cors = require("cors");
 
 const routes = require("./routes");
@@ -20,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
-app.use("/", routes); //  Connect all our routes to our application
+// app.use("/", routes); //  Connect all our routes to our application
 
 /**
  * Database setup
@@ -29,9 +30,7 @@ const users_ATLAS_URI = require("./config/db.js").users_mongo_uri;
 const uri = users_ATLAS_URI;
 mongoose.connect(uri, {
   useNewUrlParser: true,
-  useCreateIndex: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
 });
 const connection = mongoose.connection;
 connection.once("open", () => {

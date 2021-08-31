@@ -2,7 +2,11 @@ const router = require("express").Router();
 
 const { route } = require("./public");
 // const public = require("./public");
-const { getStockData } = require("../controllers/getStockData");
+const {
+  getStockData,
+  getSimilarStockNames,
+} = require("../controllers/getStockData");
+const { addStockData } = require("../controllers/addStockData");
 // const protected = require("./protected");
 
 const public = require("./public");
@@ -30,4 +34,8 @@ router.get("/", (req, res) => {
     .status(200)
     .json({ TEST: "Sucessfull", status: "Server is working" });
 });
+
+router.get("/add_new_stock_data/:stock", addStockData);
+
+router.get("/get_stocks/:stock_pattern", getSimilarStockNames);
 module.exports = router;

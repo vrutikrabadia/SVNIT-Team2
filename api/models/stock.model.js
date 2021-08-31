@@ -5,6 +5,29 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const priceSchema = new Schema(
+  {
+    date: {
+      type: Date,
+    },
+    open: {
+      type: Number,
+    },
+    high: {
+      type: Number,
+    },
+    low: {
+      type: Number,
+    },
+    close: {
+      type: Number,
+    },
+    volume: {
+      type: Number,
+    },
+  },
+  { timestamps: false, _id: false }
+);
 /**
  * Stcok Schema	{Schema}
  * @param {String} symbol - symbol of the stock
@@ -21,39 +44,13 @@ const stockSchema = new Schema(
     },
     name: {
       type: String,
-      required: true,
+      required: false,
     },
-    prices: [
-      {
-        date: {
-          type: Date,
-          required: true,
-        },
-        open: {
-          type: Number,
-          required: true,
-        },
-        high: {
-          type: Number,
-          required: true,
-        },
-        low: {
-          type: Number,
-          required: true,
-        },
-        close: {
-          type: Number,
-          required: true,
-        },
-        volume: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
+    prices: [priceSchema],
   },
   {
     timestamps: true,
+    collection: "stocks",
   }
 );
 

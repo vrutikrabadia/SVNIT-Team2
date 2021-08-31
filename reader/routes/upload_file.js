@@ -1,6 +1,7 @@
 const fs = require('fs');
 const uploadDisk = require("../middleware/multer");
 const stockSchema = require("./../models/stocks.model");
+const axios = require("axios");
 
 
 const router = require("express").Router();
@@ -27,48 +28,53 @@ router.post("/", uploadDisk.single("file") , async(req,res)=>{
     //     });
 
     // res.send(data);
-    // data.forEach((element,i) => {
-    //     stockSchema.findOne({symbol: element.symbol }, (err,found)=>{
-    //         if(err){
-    //             return res.sendStatus(500);
-    //             console.log(err);
-    //         }
-    //         if(found){
-    //             stockSchema.updateMany({symbol: element.symbol}, {
-    //                 $addToSet:{prices:{$each: element.prices}}
-    //             },{
-    //                 multi: true,
-    //               },
-    //               (err, done)=>{
-    //                     if (err) 
-    //                         return res.status(500)
-    //                     else{
-    //                         if(i == data.length){
-    //                             res.sendStatus(200);
-    //                         }
-    //                     }
+    for(let i=0; i<data.length; i++) {
+        console.log(i);
+        let element = data[i];
+        stockSchema.findOne({symbol: element.symbol }, (err,found)=>{
+            if(err){
+                console.log(err);
+                return res.sendStatus(500);
+                
+            }
+            if(found){
+                stockSchema.updateMany({symbol: element.symbol}, {
+                    $addToSet:{prices:{$each: element.prices}}
+                },{
+                    multi: true,
+                  },
+                  (err, done)=>{
+                        if (err) 
+                            return res.status(500)
+                        else{
+                            if(i == data.length-1){
+                                res.sendStatus(200);
+                            }
+                        }
                             
-    //               })
-    //         }
-    //         else{
-    //             let stock = new stockSchema(element);
-    //             stock.save((err)=>{
-    //                 if(err){
-    //                     return res.sendStatus(500);
-    //                     console.log(err);
-    //                 }
-    //                 else{
-    //                     if(i == data.length){
-    //                         res.sendStatus(200);
-    //                     }
-    //                 }
-    //             })
-    //         }
-    //     })
-    // });   
+                  })
+            }
+            else{
+                let stock = new stockSchema(element);
+                stock.save((err)=>{
+                    if(err){
+                        console.log(err);
+                        return res.sendStatus(500);
+                        
+                    }
+                    else{
+                        if(i == data.length-1){
+                            res.sendStatus(200);
+                        }
+                    }
+                })
+            }
+        })
+    } 
+
     fs.writeFileSync('./data.json', JSON.stringify(data) , 'utf-8'); 
 
-    function clean_data(data) {
+    async function clean_data(data) {
         
         let output = [];
         for(let i=0;i<Object.keys(data).length;i++) {
@@ -84,7 +90,7 @@ router.post("/", uploadDisk.single("file") , async(req,res)=>{
             
             let id = already_exists_in_json(output, data[i].symbol);
             if( id==-1 ) {
-                obj['name'] = 'Defaultname';
+                obj['name'] = await makeGetRequest(obj.symbol);
                 //obj['name'] = get_name_from_symbol(symbol);
                 //output.push({ obj['symbol'], obj['name'], [] });
                 obj['prices']=[];
@@ -116,6 +122,26 @@ router.post("/", uploadDisk.single("file") , async(req,res)=>{
             return 0;    
         }    
     } 
+
+    async function makeGetRequest(symbol) {
+        console.log(symbol);
+        // return new Promise(function (resolve, reject) {
+            let API_KEY = process.env.IEX_KEY;
+            
+            let url = 'https://cloud.iexapis.com/stable/stock/'+symbol+'/company/tops?token='+API_KEY;
+            console.log(url);
+            await axios.get(url).then(
+                (response) => {
+                    var result = response.data;
+                    return result.companyName;
+                },
+                    (error) => {
+                    console.log(error);
+                    return;
+                }
+            );
+        // });
+    }
 })
 
 module.exports = router;

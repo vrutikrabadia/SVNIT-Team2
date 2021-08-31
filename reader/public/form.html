@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="mid">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" ref="upload" id="file" aria-label="File Input" class="cf" onchange="getFileContent()" required>
+            <button type="submit" name="section" value="" class="bt btn btn-success" id="upload_btn">Upload File</button>
+        </form>
+    </div>
+    <style>
+        .mid{
+            margin-top:100px;
+            margin-left:500px;
+            font-size:25px;
+        }
+        .bt{
+            padding: 10px 20px;
+            font-size: 20px;
+            border-radius: 10px;
+            width:25%;    
+        }
+        body{
+            background: rgb(158, 127, 127);
+        }
+        input[type='file']{
+            color:rgb(238, 255, 0);
+            font-size:25px;
+        }
+    </style>
+</body>
+</html>

@@ -2,11 +2,13 @@ const fs = require('fs');
 const uploadDisk = require("../middleware/multer");
 const stockSchema = require("./../models/stocks.model");
 const axios = require("axios");
-
+const path = require('path');
 
 const router = require("express").Router();
 
-
+router.get("/",(req,res)=>{
+    res.sendFile(path.resolve('public/form.html'));
+})
 
 router.post("/", uploadDisk.single("file") , async(req,res)=>{
     let rawdata = fs.readFileSync(__dirname+"/../uploads/data.json");

@@ -12,7 +12,7 @@ Members - in alphabetical order
 
 ### [Web-documentation of the APIs](https://avanishcodes.github.io/SVNIT-Team2/global.html)
 
-### All commands from the root server
+### All commands from the root directory
 
 - environment file structure
 
@@ -24,24 +24,43 @@ Members - in alphabetical order
 > > JWT_SECRET=<your-secret-stuff>
 > > ```
 
-- How to start the backend server
+- How to start the backend server - `port 3000`
+
+  - requires NodeJS
 
 > ```BaSH
 > cd api && npm i && npm run dev
 > ```
 
-- How to start the frontend server
+- How to start the frontend server - `port 5000`
 
-> ```flutter
-> flutter main.dart
+  - requires Flutter
+
+> ```BaSH
+> cd nt_front_end && flutter pub get && flutter -d chrome run --web-port 5000
 > ```
 
-- How to upload the JSON file data to the database
+- How to upload the JSON file data to the database - `port 3001`
+
+  - requires NodeJS
 
 > ```BaSH
 > cd reader && npm i && npm run start
 > ```
 
-External APIs used
+### External APIs used
 
 - [IEX Cloud](https://iexcloud.io/docs/api/#company)
+
+## Technical Stack Used
+
+- [MongoDB](https://www.mongodb.com/)
+- [Firebase login and auth](https://firebase.google.com/docs/auth/web/google-signin)
+- [Flutter](https://flutter.dev)
+- [BaSH](https://basher.dev)
+- [JWT](https://jwt.io/)
+- [IEX Cloud](https://iexcloud.io/docs/api/#company)
+- [Google Cloud Platform](https://cloud.google.com/)
+- [GitHub](https://www.github.com/AvanishCodes/SVNIT-Team2)
+- [JavaScript](https://www.javascript.com/)
+- [Node.js](https://nodejs.org/)

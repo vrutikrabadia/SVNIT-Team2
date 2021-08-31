@@ -8,6 +8,7 @@ const routes = require("./routes");
 /**
  * Express server setup
  * @type {Express}
+ * @returns {Express} app - Express server
  */
 const app = express();
 

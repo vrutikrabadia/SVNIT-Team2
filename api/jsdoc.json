@@ -1,7 +1,19 @@
 {
     "source": {
         "include": [
-            "./controllers/*.js"
+            "./app.js",
+            "./config/db.js",
+            "./config/firebase.js",
+            "./controllers/addStockData.js",
+            "./controllers/getStockData.js",
+            "./middleware/auth.js",
+            "./middleware/multer.js",
+            "./middleware/index.js",
+            "./models/stock.model.js",
+            "./models/user.model.js",
+            "./routes/index.js",
+            "./routes/protected/index.js",
+            "./routes/protected/upload_file.js"
         ],
         "includePattern": ".js$",
         "excludePattern": "(node_modules/|docs)"
@@ -16,6 +28,7 @@
     "opts": {
         "recurse": true,
         "encoding": "utf8",
-        "destination": "./../docs/"
-    }
+        "destination": "../docs/"
+    },
+    "recurseDepth": 10
 }

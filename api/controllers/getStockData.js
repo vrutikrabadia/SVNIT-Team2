@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Stock = require("../models/stock.model");
 
 /**
- * @api {get} /stock/:symbol Get stock data
+ * @api {get} /{stock} Get stock data
  * @param {req} req - request object containing stock symbol in path
  * @param {res} res - response object containing stock data
  */
@@ -24,17 +24,43 @@ exports.getStockData = async function (req, res) {
       return res.status(200).json({ status: "success", stocks: stocks });
     }
   });
-  // console.log(stocks);
-  // return res.status(200).json({
-  //   status: "success",
-  // });
 };
 
+/**
+ * @api {get} /get_stocks/{stock_pattern} Get stock names with company name for a given pattern
+ * @param {obj} req Request object containing pattern of stock symbol to be searched in path
+ * @param {obj} res List of matching stock symbols
+ */
 exports.getSimilarStockNames = async function (req, res) {
   let stocks = await Stock.find({
     symbol: { $regex: req.params.stock_pattern },
   }).select("symbol name");
   if (stocks.length > 0)
     res.status(200).json({ status: "success", message: stocks });
+  else res.status(404).json({ status: "error", message: "No stocks found" });
+};
+
+/**
+ * @api {get} /stock/:symbol/:date Get stock data for a given date
+ * @param {object} req Request object containing stock symbol in path
+ * @param {object} res Response object containing stock data within a given range of dates
+ */
+exports.getDateRangeData = async function (req, res) {
+  let stocks = await Stock.find({
+    symbol: req.params.stock,
+  });
+  let startDate = new Date(req.body.start_date);
+  let endDate = new Date(req.body.end_date);
+  let data = [];
+  console.log(stocks[0].prices);
+  let returnObj = {};
+  for (let i = 0; i < stocks[0].prices.length; i++) {
+    let date = new Date(stocks[0].prices[i].date);
+    if (date >= startDate && date <= endDate) {
+      data.push(stocks[0].prices[i]);
+    }
+  }
+  if (stocks.length > 0)
+    res.status(200).json({ status: "success", message: data });
   else res.status(404).json({ status: "error", message: "No stocks found" });
 };

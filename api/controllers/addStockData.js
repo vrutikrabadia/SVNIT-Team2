@@ -4,9 +4,12 @@
 const mongoose = require("mongoose");
 const Stock = require("../models/stock.model");
 
+/**
+ * @api {post} /add_new_stock_data Add Stock Data
+ * @param {req} req request containing the stock in the path
+ * @param {*} res result in json having the updated stock data
+ */
 exports.addStockData = async function (req, res) {
-  console.log("getStockData");
-  console.log(req.params.stock);
   // Delete below line and uncomment the line below to test the function
   Stock.updateMany(
     {

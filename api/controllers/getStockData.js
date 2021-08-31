@@ -5,13 +5,12 @@ const mongoose = require("mongoose");
 const Stock = require("../models/stock.model");
 
 /**
+ * Function to fet stock data of a particular stock symbol
  * @api {get} /{stock} Get stock data
- * @param {req} req - request object containing stock symbol in path
- * @param {res} res - response object containing stock data
+ * @param {object} req - request object containing stock symbol in path
+ * @param {object} res - response object containing stock data
  */
 exports.getStockData = async function (req, res) {
-  console.log("getStockData");
-  console.log(req.params.stock);
   // Delete below line and uncomment the line below to test the function
   Stock.find({}, (err, stocks) => {
     if (err) {
@@ -28,8 +27,8 @@ exports.getStockData = async function (req, res) {
 
 /**
  * @api {get} /get_stocks/{stock_pattern} Get stock names with company name for a given pattern
- * @param {obj} req Request object containing pattern of stock symbol to be searched in path
- * @param {obj} res List of matching stock symbols
+ * @param {object} req Request object containing pattern of stock symbol to be searched in path
+ * @param {object} res List of matching stock symbols
  */
 exports.getSimilarStockNames = async function (req, res) {
   let stocks = await Stock.find({

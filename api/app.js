@@ -2,9 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fs = require('fs');
+const fs = require("fs");
 const mongoose = require("mongoose");
-
 
 const routes = require("./routes");
 
@@ -20,7 +19,6 @@ const app = express();
  * Add the middlewares to express server
  */
 
-
 // mongoose.connect('mongodb://localhost:27017/nt_team2', {useNewUrlParser: true});
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -29,7 +27,6 @@ app.use(express.static("public"));
 app.use("/", routes); //  Connect all our routes to our application
 
 var dir = "./uploads";
-
 
 /**
  * Database setup

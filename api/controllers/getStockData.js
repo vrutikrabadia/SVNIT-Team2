@@ -52,14 +52,23 @@ exports.getDateRangeData = async function (req, res) {
   let endDate = new Date(req.body.end_date);
   let data = [];
   console.log(stocks[0].prices);
-  let returnObj = {};
+  let highest = 0;
+  let lowest = Infinity;
   for (let i = 0; i < stocks[0].prices.length; i++) {
     let date = new Date(stocks[0].prices[i].date);
     if (date >= startDate && date <= endDate) {
-      data.push(stocks[0].prices[i]);
+      let price = stocks[0].prices[i];
+      data.push(price);
+      if (price.high > highest) highest = price.high;
+      if (price.low < lowest) lowest = price.low;
     }
   }
   if (stocks.length > 0)
-    res.status(200).json({ status: "success", message: data });
+    res.status(200).json({
+      status: "success",
+      message: data,
+      highest: data[0].high,
+      lowest: data[0].low,
+    });
   else res.status(404).json({ status: "error", message: "No stocks found" });
 };

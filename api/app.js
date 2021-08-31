@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
-// app.use("/", routes); //  Connect all our routes to our application
+app.use("/", routes); //  Connect all our routes to our application
 
 /**
  * Database setup

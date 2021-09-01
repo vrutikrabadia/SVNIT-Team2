@@ -38,7 +38,7 @@ Members - in alphabetical order
   - requires Flutter
 
 > ```BaSH
-> cd nt_front_end && flutter pub get && flutter -d chrome run --web-port 5000
+> cd nt_app_front && flutter pub get && flutter -d chrome run --web-port 5000
 > ```
 
 - How to upload the JSON file data to the database - `port 3001`
